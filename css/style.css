@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+}	    
+
+
+html{font-family: pretendard; font-weight: 700; margin: 0px;}
+body{margin: 0px;}
+
+
+.headLogo{width: 333.9px;}
+
+.setBottom{position: absolute; bottom: 180px;}
+
+h1{
+	font-family: "neue-haas-grotesk-display"; font-weight: 600; font-style: normal;
+	font-size: 80px; line-height: 95px;
+}
+h2{
+	font-family: "neue-haas-grotesk-display"; font-weight: 700; font-style: normal;
+	font-size: 40px; line-height: 40px; letter-spacing: -10; 
+	color: #919191;
+	margin: 0; padding: 0;
+}
+h3{font-size: 28px; line-height: 40px; margin: 0}
+p{font-size: 20px; line-height: 30px; margin: 0}
+
+button{
+	font-family: pretendard; font-weight: 700; 
+	font-size: 24px; line-height: 40px; letter-spacing: -10;
+	margin: 0; margin-top: 40px;
+	padding: 16px 39px 15px 39px; border-radius: 40px; border: none ;
+}
+.white{color: white;}
+.libraryName{
+	font-family: "neue-haas-grotesk-display"; font-weight: 900; font-style: normal;
+	font-size: 100px; line-height: 95px;
+}

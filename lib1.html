@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lib1(수정중)</title>
+
+	<link rel="stylesheet" href="https://use.typekit.net/qlr3jdd.css">
+    <link href="./css/style.css" rel="stylesheet">
+
+
+	<style type="text/css">
+		.wrapper{
+			position: relative; width: 800px;
+			padding: 180px 283px;
+		}
+
+		.header{
+			margin-bottom: 40px;
+		}
+
+		#Library{display: flex; gap: 8px; flex-wrap: wrap;}
+		.LibIMG {width: 194px; height: 194px;}
+
+	/*x버튼만들기*/
+		.btn_close {
+			position: absolute;
+			top: 0px; right: 0px;
+			display:inline-block;
+			width:40px;
+			height:40px;
+			margin: 180px 40px 0px 0px;
+			z-index: 10;
+
+			background: transparent;
+			border: none;
+			border-radius: 0;
+			padding: 0;
+		}
+		.btn_close:before, .btn_close:after {
+			margin-left: 18px;
+			margin-top: -4px;
+			position: absolute;
+			content:' ';
+			height:48px;
+			width:4px;
+			background-color: black;
+		}
+		.btn_close:before{
+			transform:rotate(45deg);
+		}
+		.btn_close:after{
+			transform:rotate(-45deg);
+		}
+	</style>
+</head>
+<body>
+	<div class="btn_close" onclick="history.back();"></div>
+	<div class="wrapper">
+		<div class="header">
+			<img src="./img/logo.svg" class="headLogo">
+			<h2>Library</h2>
+			<h2 style="color: black;">Hard</h2>
+		</div>
+		<div id="Library">
+			
+		</div>
+	</div>
+
+<script type="text/javascript">
+
+	const Library = document.getElementById("Library");
+
+// 이미지 불러오기
+	getLibIMG();
+
+	function getLibIMG() {
+	    for (let i = 1; i <= 67; i++) {
+	        const newDiv = document.createElement('div');
+	        newDiv.id = "LibIMG-" + i;
+	        newDiv.classList.add('LibIMG');
+
+	        const paddedNumber = i.toString().padStart(3, '0');
+	        newDiv.style.backgroundImage = 'url(./img/Library/hard/' + paddedNumber + '.jpg)';
+			
+			Library.appendChild(newDiv);
+	    }
+	}
+
+
+
+// // // 타임아웃
+// 	let touchTimeout;
+
+// 	function resetTouchTimeout() {
+// 	    clearTimeout(touchTimeout);
+// 	    touchTimeout = setTimeout(goSplash, 30000);
+// 	}
+
+// 	function TouchEventHandler() {
+// 	    resetTouchTimeout();
+// 	}
+
+// 	function goSplash() {
+// 		location.replace('./splash.html');
+// 	}
+
+// 	document.addEventListener('touchstart', TouchEventHandler);
+
+// 	resetTouchTimeout();
+
+
+
+</script>
+</body>
+</html>

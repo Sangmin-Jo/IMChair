@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>IMChair(수정중)</title>
+
+	<link rel="stylesheet" href="https://use.typekit.net/qlr3jdd.css">
+    <link href="./css/style.css" rel="stylesheet">
+
+
+	<style type="text/css">
+
+/*인트로 비디오*/
+		.full{
+			position: relative; width: 100%; height: 100%; margin: auto;
+		}
+		#introVideo {
+			width: auto; height: 100%;
+		}
+
+		#videoContainer {
+			width: 1366px; height: 1024px;
+			top: 0; left: 0;
+			overflow: hidden;
+		}
+
+
+/*처음 큰로고*/
+		#biglogo{
+			position: fixed; top: 0; left: 0;
+			background-image: url("./img/logo.svg");
+			background-color: none;
+			background-size: calc(100% - 80px);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+
+
+/*이미지 슬라이드*/
+		#intro_1{
+			background-image: url("./img/logo_Grey.svg");
+			background-color: none;
+			background-size: calc(100% - 80px);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-color: white;
+		}
+
+		#main_Demo{position: relative; overflow: hidden;}
+		#bgSlide{
+			position: absolute; 
+			margin: 0; padding: 0; top: 0; left: 0;
+			display: flex; flex-direction: row; gap: 0;
+
+			animation-name: slideright;
+			animation-iteration-count: infinite;
+			animation-duration: 60s;
+			animation-timing-function: linear;
+			animation-fill-mode: forwards;
+		}
+		.presetIMG{
+			width: 1366px; height: 1024px;
+			background-size: 100%; background-position: center;
+		}
+
+		@keyframes slideright {
+			0% {
+				transform: translateX(0%);
+			}
+			100% {
+				transform: translateX(-50%);
+			}
+		}
+
+		.main {
+			background: white; 
+		}
+
+
+		.wrapper{
+			position: relative; width: 800px; height: 664px;
+			height: 664px;
+			padding: 180px 283px;
+		}
+
+
+		#header {
+			width: 800px;
+			padding: 180px 283px 0px 283px; 
+			position:fixed; top: 0;
+		/*	background: rgba(255, 255, 255, 0.6);*/
+			}
+
+		.libraryName{margin-top: 20px}
+
+	</style>
+</head>
+<body>
+	<div id="header" style="z-index: 20;">
+		<img src="./img/logo.svg" class="headLogo">
+		<h2 id="nav">Demo service</h2>
+	</div>
+
+	<div id="intro" class="main">
+		<div id="videoContainer">
+			<video id="introVideo" autoplay muted>
+				  <source src="././img/movie.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div id="biglogo" class="full"></div>
+		<div id="intro_1" class="wrapper">
+			<h3 style="padding-top: 125px;">
+				IMChair 시리즈는 인공지능에 기반해 당신에게 의자를 추천합니다.<br>
+				당신이 업로드한 이미지를 분석하고, 그것에 꼭 맞는 의자를 제안합니다.<br>
+				<br>
+				당신의 스타일, 선호, 취향까지. IMChair는 당신이 업로드한 단 하나의 <br>
+				이미지로 이 모든 것을 파악합니다. 인공지능을 활용하여 당신의 이미지를<br> 
+				깊이 분석하고, 그 이미지와 가장 잘 어울리는, 당신의 개성을 반영한 <br>
+				의자를 추천합니다. 단순히 의자를 추천하는 것이 아니라, 당신의 취향과 <br>
+				스타일을 위한 제안을 드립니다.<br>
+				<br>
+				이미지 하나로 시작하는 당신만을 위한 의자, IMChair로 만나세요.
+			</h3>
+		</div>
+	</div>
+	<div id="mainSub">
+		<div id="main_Demo" class="wrapper main">
+			<div id="bgSlide"></div>
+			<div style="width: 1366px; height: 1024px; background: rgba(0, 0, 0, 0.3); position: absolute; top: 0; left:0;"></div>
+			<div class="setBottom">
+			
+				<h3 class="white">
+					IMChair 데모 서비스에서는 인류사에 의미있는 명화와 사진을 포함한 <br>
+					이미지가 준비되어 있습니다.<br>
+					이미지 프리셋 중 마음에 드는 이미지를 골라, IMChair가 분석한 이미지의 <br>
+					결과와 의자를 확인해 보세요.
+				</h3>
+				<button id="DemoBtn" onclick="location.href='./demo.html'" style="background: white; color: black;">
+					데모 서비스 더 살펴보기
+				</button>
+			</div>
+		</div>
+		<div id="main_ModelArchitecture_1" class="wrapper main">
+			<div class="setBottom">
+				<img src="./img/GoogleAILogo.svg" height="80px" style="margin-bottom: 180px;">
+				<p>
+					IMChair 프로젝트에서는 전이학습(Transfer Learning)의 방식을 사용했다. 전이학습은 이미 대량의 <br>데이터셋으로 학습된 모델의 지식을 활용하여, 새로운 모델을 빠르고 효율적으로 학습시키는 방법이다.<br>
+					<br>
+					이미지 분류를 위해 널리 알려진 구글의 인셉션(Inception V3) 모델을 기반으로, 이미지의 다양한 <br>요소와 형태를 인식하고 분석하는 모델을 구성했다.
+				</p>
+			</div>
+		</div>
+		<div id="main_ModelArchitecture_2" class="wrapper main">
+			<div class="setBottom">
+				<p>
+					딥러닝 모델을 훈련시키기 위해서는 대량의 라벨이 붙은 이미지 데이터가 필요하다. <br>
+					이를 위해 IMChair 프로젝트에서는 효율적인 데이터 수집 방법을 모색하였고, 이 과정에서 생성형 <br>
+					인공지능, Stable Diffusion을 활용했다.<br>
+					<br>
+					Stable Diffusion은 입력한 텍스트를 바탕으로 이미지를 생성할 수 있는 모델이다. 이를 활용하여, <br>
+					다양한 디자인 요소와 형태를 포함하는 새로운 이미지를 대량으로 생성했고, 이렇게 생성된 이미지는 <br>
+					딥러닝 모델의 학습 데이터로 사용되었다.
+				</p>
+				<button id="ModelBtn" onclick="location.href='Model.html'" style="background: black; color: white;">
+					Model Architecture 더 살펴보기
+				</button>
+			</div>
+		</div>
+		<div id="main_Library" class="wrapper main">
+			<div class="setBottom">
+				<div class="libraryName" onclick="location.href='./lib1.html'">Hard</div>
+				<div class="libraryName" onclick="location.href='./lib2.html'">Soft</div>
+				<div class="libraryName" onclick="location.href='./lib3.html'">Static</div>
+				<div class="libraryName" onclick="location.href='./lib4.html'">Dynamic</div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+// 이미지 슬라이드
+	getPresetIMG()
+
+	function getPresetIMG() {
+		const presetArray = [{"name":"img1","fullname":"Nighthawks by Edward Hopper","property":"soft static98"},
+			{"name":"img2","fullname":"Impression by Marian Wawrzeniecki","property":"soft static78"},
+			{"name":"img3","fullname":"Rocks at Belle Isle by Claude Monet","property":"soft static55"},
+			{"name":"img4","fullname":"Pygmalion and Galatea by Jean Léon Gérôme","property":"soft dynamic61"},
+			{"name":"img5","fullname":"Salome by Henri Regnault","property":"soft dynamic74"},
+			{"name":"img6","fullname":"산수도(山水圖) by 서문보","property":"soft dynamic82"},
+			{"name":"img7","fullname":"Lovers by Mikuláš Galanda","property":"soft dynamic93"},
+			{"name":"img8","fullname":"Green Wheat Fields by Vincent van Gogh","property":"soft dynamic100"},
+			{"name":"img9","fullname":"AS8-14-2383HR by Apollo 8 astronaut William Anders","property":"hard static100"},
+			{"name":"img10","fullname":"A 18 by László Moholy-Nagy","property":"hard static94"},
+			{"name":"img11","fullname":"Counter-composition VI. by Theo van Doesburg","property":"hard static83"},
+			{"name":"img12","fullname":"Seconds into the first airplane flight","property":"hard static70"},
+			{"name":"img13","fullname":"Signet of the Staatliche Bauhaus by Oskar Schlemmer","property":"hard static63"},
+			{"name":"img14","fullname":"The Rocket Book Pl 15 by Peter Newell","property":"hard static51"},
+			{"name":"img15","fullname":"Lunch atop a Skyscraper New York Herald-Tribune","property":"hard dynamic68"},
+			{"name":"img16","fullname":"The Great Wave off Kanagawa","property":"hard dynamic96"}]
+
+		const container = document.getElementById("bgSlide")
+		for (var i = 0; i < presetArray.length; i++) {
+			const newDiv = document.createElement('div');
+
+			newDiv.id = "preset-" + (i + 1);
+			newDiv.classList.add('presetIMG');
+			newDiv.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
+			container.appendChild(newDiv);
+		}
+	}
+
+// 내비 내용 변경
+const header = document.getElementById('header');
+const nav = document.getElementById('nav');
+const headLogo = document.getElementById('headLogo');
+
+header.style.display = 'none';
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    window.addEventListener("scroll", function() {
+        let scroll = window.pageYOffset + 340;
+        const navArray = ['none','Demo service', 'Model Architecture', 'Model Architecture', 'Library'];
+
+        for (let i = 0; i < document.querySelectorAll(".main").length; i++) {
+            let mainTop = document.querySelectorAll(".main")[i].offsetTop;
+            let mainBottom = mainTop + document.querySelectorAll(".main")[i].offsetHeight;
+
+            if (scroll >= mainTop && scroll < mainBottom) {
+                nav.innerHTML = navArray[i];
+
+                if (i === 0) {
+				    header.style.display = 'none';
+				} else if (i === 1) {
+				    nav.style.color = 'white';
+				    header.style.display = 'block';
+				} else if (i > 1) {
+				    nav.style.color = 'black';
+				    header.style.display = 'block';
+				}
+            }
+        }
+    });
+});
+
+
+// // 타임아웃
+	let touchTimeout;
+
+	function resetTouchTimeout() {
+	    clearTimeout(touchTimeout);
+	    touchTimeout = setTimeout(goSplash, 30000);
+	}
+
+	function TouchEventHandler() {
+	    resetTouchTimeout();
+	}
+
+	function goSplash() {
+		location.replace('./splash.html');
+	}
+
+	document.addEventListener('touchstart', TouchEventHandler);
+
+	resetTouchTimeout();
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Demo(수정중)</title>
+
+	<link rel="stylesheet" href="https://use.typekit.net/qlr3jdd.css">
+    <link href="./css/style.css" rel="stylesheet">
+
+
+	<style type="text/css">
+		#first{
+			position: fixed; left: 0; bottom: 0;
+			width: 100%; height: 864px; 
+			z-index: 5;
+			text-align: center;
+			background: rgba(0, 0, 0, 0.6);
+			animation-name: fadeout;
+			animation-duration: 1.3s;
+			animation-delay: 2s;
+			animation-timing-function: ease-in-out;
+			animation-fill-mode: forwards;
+		}
+
+		@keyframes fadeout{
+			from {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+			}
+		}
+
+
+		#imageLibrary{
+			position: fixed; left: 0; bottom: 0;
+			width: 100%; height: 864px;
+			display: flex; flex-direction: row; flex-wrap: wrap; gap: 0;
+			z-index: 1;
+		}
+
+		#imageLibrary2{
+			position: fixed; left: 0; bottom: 0;
+			height: 120px;
+			display: flex; gap: 0; 
+			flex-flow: row nowrap;
+			overflow: auto;
+			flex-basis: 100%; flex-shrink: 0; 
+			z-index: 1;
+			justify-content: space-between;
+		}
+
+		.presetIMG{
+			width: 25%; height: 25%;
+			background-size: 100%; background-position: center;
+			background-repeat: no-repeat;
+
+		}
+
+
+		h2,h4{color: white; }
+		.grey{color: #919191}
+		h4{font-size: 16px; line-height: 20px; margin: 4px;}
+
+		#IMGAndChair{
+			display: flex; flex-direction: row; gap: 0;
+		}
+
+		.col2{width: 50%; height: 616px; padding: 40px; background: #242424;};
+
+		#propsContainer{position: relative; margin: 0; padding: 0;}
+		#prop1{opacity: 100%;}
+		#prop2{position: absolute; left: 50%; top: 40px; opacity: 100%;}
+		#prop3{position: absolute; right: 40px; top: 40px; opacity: 100%;}
+
+		#colIMG, #colChair {position: relative;}
+		#selectedIMG {
+			position: absolute; 
+			width: 683px; height: 696px; left: 0; top: 0; 
+			background-size: 60%; 
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		#chairIMG {
+			position: absolute; 
+			width: 683px; height: 696px; left: 0; top: 0; 
+			background-size: 100%; 
+			background-position: center;
+		}
+
+/*x버튼만들기*/
+		.btn_close {
+			position: absolute;
+			top: 0px; right: 0px;
+			display:inline-block;
+			width:40px;
+			height:40px;
+			margin: 40px;
+
+			background: transparent;
+			border: none;
+			border-radius: 0;
+			padding: 0;
+		}
+		.btn_close:before, .btn_close:after {
+			margin-left: 18px;
+			margin-top: -4px;
+			position: absolute;
+			content:' ';
+			height:48px;
+			width:4px;
+			background-color: white;
+		}
+		.btn_close:before{
+			transform:rotate(45deg);
+		}
+		.btn_close:after{
+			transform:rotate(-45deg);
+		}
+
+	</style>
+</head>
+<body style="background: black;">
+	<div class="header" style="padding: 40px 40px 0px 40px;">
+		<img src="./img/logo_White.svg" class="headLogo" style="fill: white;">
+		<h2 class="white">demo service</h2>
+		<div class="btn_close" onclick="history.back();"></div>
+	</div>
+	<div id="first">
+		<h3 class="white" style="padding-top: 412px;">마음에 드는 이미지를 선택해 보세요</h3>
+	</div>
+	<div id="IMGAndChair">
+		<div class="col2" id="colIMG">
+			<h4 id="title"></h4>
+			<h4 id="artist" class="grey"></h4>
+			<div id="selectedIMG"></div>
+		</div>
+		<div class="col2" id="colChair">
+			<div id="propsContainer">
+				<h2 id="prop1"></h2>
+				<h2 id="prop2"></h2>
+				<h2 id="prop3"></h2>
+			</div>
+			<div id="chairIMG"></div>
+		</div>
+	</div>
+	<h2 style="margin-left: 40px; margin-bottom: 4px;">Image Library</h2>
+	<div id="imageLibrary"></div>
+	
+
+<script type="text/javascript">
+
+	const presetArray = [{"name":"img1","title":"Nighthawks","artist":"Edward Hopper","property":"soft static 98","chair":"soft_static_100"},
+{"name":"img2","title":"Impression","artist":"Marian Wawrzeniecki","property":"soft static 78","chair":"soft_static_80"},
+{"name":"img3","title":"Rocks at Belle Isle","artist":"Claude Monet","property":"soft static 55","chair":"soft_static_60"},
+{"name":"img4","title":"Pygmalion and Galatea","artist":"Jean Léon Gérôme","property":"soft dynamic 61","chair":"soft_dynamic_60"},
+{"name":"img5","title":"Salome","artist":"Henri Regnault","property":"soft dynamic 74","chair":"soft_dynamic_70"},
+{"name":"img6","title":"산수도(山水圖)","artist":"서문보","property":"soft dynamic 82","chair":"soft_dynamic_80"},
+{"name":"img7","title":"Lovers","artist":"Mikuláš Galanda","property":"soft dynamic 93","chair":"soft_dynamic_90"},
+{"name":"img8","title":"Green Wheat Fields","artist":"Vincent van Gogh","property":"soft dynamic 100","chair":"soft_dynamic_100"},
+{"name":"img9","title":"AS8-14-2383HR","artist":"Apollo 8 astronaut William Anders","property":"hard static 100","chair":"hard_static_100"},
+{"name":"img10","title":"A 18","artist":"László Moholy-Nagy","property":"hard static 94","chair":"hard_static_90"},
+{"name":"img11","title":"Counter-composition VI.","artist":"Theo van Doesburg","property":"hard static 83","chair":"hard_static_80"},
+{"name":"img12","title":"Seconds into the first airplane flight","artist":"","property":"hard static 70","chair":"hard_static_70"},
+{"name":"img13","title":"Signet of the Staatliche Bauhaus","artist":"Oskar Schlemmer","property":"hard static 63","chair":"hard_static_60"},
+{"name":"img14","title":"The Rocket Book Pl 15","artist":"Peter Newell","property":"hard static 51","chair":"hard_neautral"},
+{"name":"img15","title":"Lunch atop a Skyscraper New York Herald-Tribune","artist":"","property":"hard dynamic 68","chair":"hard_dynamic_70"},
+{"name":"img16","title":"The Great Wave off Kanagawa","artist":"","property":"hard dynamic 96","chair":"hard_dynamic_100"}]
+
+	const imageLibrary = document.getElementById("imageLibrary");
+
+// 이미지 불러오기
+	getPresetIMG();
+
+	function getPresetIMG() {
+	    for (let i = 0; i < presetArray.length; i++) {
+	        const newDiv = document.createElement('div');
+	        newDiv.id = "preset-" + (i + 1);
+	        newDiv.classList.add('presetIMG');
+	        newDiv.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
+			imageLibrary.appendChild(newDiv);
+	    }
+	}
+
+// 이미지-의자 페이지 만들기
+	const IMGAndChair = document.getElementById("IMGAndChair");
+	const colIMG = document.getElementById("colIMG");
+	const title = document.getElementById("title");
+	const artist = document.getElementById("artist");
+	const colChair = document.getElementById("colChair");
+	const prop1 = document.getElementById("prop1");
+	const prop2 = document.getElementById("prop2");
+	const prop3 = document.getElementById("prop3");
+	const chairIMG = document.getElementById("chairIMG");
+	const selectedIMG = document.getElementById("selectedIMG");
+
+	const IMGs = document.querySelectorAll('.presetIMG');
+
+	for (let i = 0; i < IMGs.length; i++) {
+	    IMGs[i].addEventListener('click', function() {
+	        makeLower();
+
+	        selectedIMG.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
+	        chairIMG.style.backgroundImage = 'url(./img/Demo_service/chair/' + presetArray[i].chair + '.png)';
+
+	        let tagId = this.id;
+	        let tagIdSplit = tagId.split('-');
+	        let clickedIndex = parseInt(tagIdSplit[1]) - 1;
+
+	        title.innerHTML = presetArray[clickedIndex].title;
+	        artist.innerHTML = presetArray[clickedIndex].artist;
+
+	        const properties = presetArray[clickedIndex].property.split(' ');
+	        prop1.innerHTML = properties[0];
+	        prop2.innerHTML = properties[1];
+	        prop3.innerHTML = properties[2];
+	    });
+	}
+
+	function makeLower() {
+	    for (let i = 0; i < IMGs.length; i++) {
+	        IMGs[i].style.height = '120px';
+	        IMGs[i].style.width = '190px';
+	    }
+
+	    imageLibrary.setAttribute("id", "imageLibrary2");
+	    // imageLibrary.style.height = '120px';
+	    // imageLibrary.style.overflowX = 'scroll';
+
+	}
+
+// 첫안내 서서히 사라지게
+	const first = document.getElementById('first')
+
+	first.addEventListener("animationend", function(e) {
+	    first.style.display = 'none'
+	}, false);
+
+
+// 타임아웃
+	let touchTimeout;
+
+	function resetTouchTimeout() {
+	    clearTimeout(touchTimeout);
+	    touchTimeout = setTimeout(goSplash, 30000);
+	}
+
+	function TouchEventHandler() {
+	    resetTouchTimeout();
+	}
+
+	function goSplash() {
+		location.replace('./splash.html');
+	}
+
+	document.addEventListener('touchstart', TouchEventHandler);
+
+	resetTouchTimeout();
+
+</script>
+</body>
+</html>
