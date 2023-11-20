@@ -6,8 +6,20 @@
 
 
 html{font-family: pretendard; font-weight: 700; margin: 0px;}
-body{margin: 0px;}
+body{
+	margin: 0px;
+	-ms-overflow-style: none;
+}
+ 
+::-webkit-scrollbar {
+	display: none;
+}
 
+#header {
+	width: 800px;
+	padding: 180px 283px 0px 283px; 
+	position:fixed; top: 0;
+		}
 
 .headLogo{width: 333.9px;}
 
@@ -37,3 +49,74 @@ button{
 	font-family: "neue-haas-grotesk-display"; font-weight: 900; font-style: normal;
 	font-size: 100px; line-height: 95px;
 }
+
+
+/*페이지전환 시 페이드인아웃*/
+	#fadePage{
+		background: white;
+		position: fixed; top: -5vh; left: -5vw;
+		width: 110vw; height: 110vh;
+		overflow: hidden;
+
+		z-index: 999;
+		pointer-events : none;
+		touch-action: none; }
+
+	
+	.fadeToWhite{
+		animation-name: toWhite;
+		animation-duration: 1.6s;
+		animation-timing-function: ease-in;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes toWhite{
+		0% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+
+	.fadeFromWhite{
+		animation-name: fromWhite;
+		animation-duration: 1.6s;
+		animation-delay: 0.6s;
+		animation-timing-function: ease-out;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes fromWhite{
+		0% {opacity: 1;}
+		100% {opacity: 0;}
+	}
+
+
+
+/*x버튼만들기*/
+	.btn_close {
+		position: absolute;
+		top: 0px; right: 0px;
+		display:inline-block;
+		width:40px;
+		height:40px;
+		margin: 180px 40px 0px 0px;
+		z-index: 10;
+
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+	}
+	.btn_close:before, .btn_close:after {
+		margin-left: 18px;
+		margin-top: -4px;
+		position: fixed;
+		content:' ';
+		height:48px;
+		width:4px;
+		background-color: black;
+	}
+	.btn_close:before{
+		transform:rotate(45deg);
+	}
+	.btn_close:after{
+		transform:rotate(-45deg);
+	}
