@@ -23,7 +23,7 @@ body{
 
 .headLogo{width: 333.9px;}
 
-.setBottom{position: absolute; bottom: 180px;}
+.setBottom{position: absolute; bottom: 180px; width: 800px;}
 
 h1{
 	font-family: "neue-haas-grotesk-display"; font-weight: 600; font-style: normal;
@@ -78,7 +78,7 @@ button{
 	.fadeFromWhite{
 		animation-name: fromWhite;
 		animation-duration: 1.6s;
-		animation-delay: 0.6s;
+		animation-delay: 0.3s;
 		animation-timing-function: ease-out;
 		animation-fill-mode: forwards;
 	}
