@@ -12,15 +12,26 @@
 	<style type="text/css">
 		#first{
 			position: fixed; left: 0; bottom: 0;
-			width: 100%; height: 864px; 
+			width: 100%; height: 864px;
 			z-index: 5;
+
+		}
+
+		#firstText{
+			width: 100%; height: 100%;
+			position: absolute;
 			text-align: center;
 			background: rgba(0, 0, 0, 0.6);
+			padding-top: 420px;
+
 			animation-name: fadeout;
 			animation-duration: 1.3s;
-			animation-delay: 2s;
+			animation-delay: 2.6s;
 			animation-timing-function: ease-in-out;
 			animation-fill-mode: forwards;
+
+			pointer-events : none;
+			touch-action: none;
 		}
 
 		@keyframes fadeout{
@@ -32,33 +43,42 @@
 			}
 		}
 
-
-		#imageLibrary{
-			position: fixed; left: 0; bottom: 0;
-			width: 100%; height: 864px;
-			display: flex; flex-direction: row; flex-wrap: wrap; gap: 0;
-			z-index: 1;
-		}
-
-		#imageLibrary2{
-			position: fixed; left: 0; bottom: 0;
-			height: 120px;
-			display: flex; gap: 0; 
-			flex-flow: row nowrap;
-			overflow: auto;
-			flex-basis: 100%; flex-shrink: 0; 
-			z-index: 1;
-			justify-content: space-between;
+		#firstLibrary{
+			width: 100%; height: 100%; gap: 0;
 		}
 
 		.presetIMG{
 			width: 25%; height: 25%;
-			background-size: 100%; background-position: center;
-			background-repeat: no-repeat;
+			object-fit: cover;
+		}
 
+		#imageLibrary{
+			position: fixed; left: 0; bottom: 0;
+			width: 100%;
+			z-index: 999;
+		}
+
+		#images{
+			height: 120px;
+
+			display: flex; gap: 0; 
+			flex-wrap: no-wrap;
+			overflow-x: scroll;
+			overflow-y: hidden;
+		}
+
+		#images::-webkit-scrollbar{
+			display:none;
+		}
+
+		#imageLibrary .presetIMG{
+			width: 190px; height: 120px;
+			object-fit: cover;
+			flex: 0 0 auto;
 		}
 
 
+/*이미지-의자*/
 		h2,h4{color: white; }
 		.grey{color: #919191}
 		h4{font-size: 16px; line-height: 20px; margin: 4px;}
@@ -77,16 +97,23 @@
 		#colIMG, #colChair {position: relative;}
 		#selectedIMG {
 			position: absolute; 
-			width: 683px; height: 696px; left: 0; top: 0; 
+			width: 100%; height: 696px; left: 0; top: 0; 
 			background-size: 60%; 
 			background-position: center;
 			background-repeat: no-repeat;
 		}
 		#chairIMG {
 			position: absolute; 
-			width: 683px; height: 696px; left: 0; top: 0; 
-			background-size: 100%; 
+			width: calc(100% - 80px); height: 616px; left: 0; top: 0; 
+			background-size: 120%; 
 			background-position: center;
+			background-repeat: no-repeat;
+
+			font-family: "neue-haas-grotesk-display"; font-weight: 700; font-style: normal;
+			font-size: 40px; line-height: 40px; letter-spacing: -10; 
+			color: white;
+			margin: 0; padding: 40px;
+			text-align: center;
 		}
 
 /*x버튼만들기*/
@@ -120,15 +147,19 @@
 		}
 
 	</style>
+
 </head>
 <body style="background: black;">
-	<div class="header" style="padding: 40px 40px 0px 40px;">
-		<img src="./img/logo_White.svg" class="headLogo" style="fill: white;">
+	<div id="fadePage" class="fadeFromWhite"></div>
+
+	<div class="header" style="padding: 40px 40px 0px 40px; height: 120px;">
+		<img src="./img/logoWhite.svg" class="headLogo" style="fill: white;">
 		<h2 class="white">demo service</h2>
-		<div class="btn_close" onclick="history.back();"></div>
+		<div class="btn_close" onclick="fadeToWhite();"></div>
 	</div>
 	<div id="first">
-		<h3 class="white" style="padding-top: 412px;">마음에 드는 이미지를 선택해 보세요</h3>
+		<h3 id="firstText" class="white" >마음에 드는 이미지를 선택해 보세요</h3>
+		<div id="firstLibrary"></div>
 	</div>
 	<div id="IMGAndChair">
 		<div class="col2" id="colIMG">
@@ -145,8 +176,11 @@
 			<div id="chairIMG"></div>
 		</div>
 	</div>
-	<h2 style="margin-left: 40px; margin-bottom: 4px;">Image Library</h2>
-	<div id="imageLibrary"></div>
+	<h2 style="margin-left: 40px; margin-top: 4px;">Image Library</h2>
+
+	<div id="imageLibrary">
+		<div id="images">
+	</div>
 	
 
 <script type="text/javascript">
@@ -169,18 +203,16 @@
 {"name":"img16","title":"The Great Wave off Kanagawa","artist":"","property":"hard dynamic 96","chair":"hard_dynamic_100"}]
 
 	const imageLibrary = document.getElementById("imageLibrary");
+	const firstLibrary = document.getElementById("firstLibrary");
+
 
 // 이미지 불러오기
-	getPresetIMG();
-
-	function getPresetIMG() {
-	    for (let i = 0; i < presetArray.length; i++) {
-	        const newDiv = document.createElement('div');
-	        newDiv.id = "preset-" + (i + 1);
-	        newDiv.classList.add('presetIMG');
-	        newDiv.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
-			imageLibrary.appendChild(newDiv);
-	    }
+	for (let i = 0; i < presetArray.length; i++) {
+		const newIMG = document.createElement('img');
+		newIMG.id = "preset-" + (i + 1);
+		newIMG.classList.add('presetIMG');
+		newIMG.src = './img/Demo_service/img_preset/' + presetArray[i].name + '.jpg';
+		firstLibrary.appendChild(newIMG);
 	}
 
 // 이미지-의자 페이지 만들기
@@ -194,69 +226,112 @@
 	const prop3 = document.getElementById("prop3");
 	const chairIMG = document.getElementById("chairIMG");
 	const selectedIMG = document.getElementById("selectedIMG");
-
+	const images = document.getElementById("images");
 	const IMGs = document.querySelectorAll('.presetIMG');
 
 	for (let i = 0; i < IMGs.length; i++) {
 	    IMGs[i].addEventListener('click', function() {
-	        makeLower();
-
-	        selectedIMG.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
-	        chairIMG.style.backgroundImage = 'url(./img/Demo_service/chair/' + presetArray[i].chair + '.png)';
-
-	        let tagId = this.id;
-	        let tagIdSplit = tagId.split('-');
-	        let clickedIndex = parseInt(tagIdSplit[1]) - 1;
-
-	        title.innerHTML = presetArray[clickedIndex].title;
-	        artist.innerHTML = presetArray[clickedIndex].artist;
-
-	        const properties = presetArray[clickedIndex].property.split(' ');
-	        prop1.innerHTML = properties[0];
-	        prop2.innerHTML = properties[1];
-	        prop3.innerHTML = properties[2];
+			while (firstLibrary.firstChild) {
+			    firstLibrary.removeChild(firstLibrary.firstChild);
+			}
+			first.style.display = 'none';
+			makeLower();
+	        makeLeft(i);
+	        makeRight(i);
 	    });
 	}
 
-	function makeLower() {
-	    for (let i = 0; i < IMGs.length; i++) {
-	        IMGs[i].style.height = '120px';
-	        IMGs[i].style.width = '190px';
+
+
+	function makeLeft(i){
+		selectedIMG.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
+
+		title.innerHTML = presetArray[i].title;
+		artist.innerHTML = presetArray[i].artist;
+	}
+
+	function makeRight(i){
+		prop1.innerHTML = '';
+	    prop2.innerHTML = '';
+	    prop3.innerHTML = '';
+	    chairIMG.style.backgroundImage = '';
+
+	    let currentNumber = 1;
+	    floatNumber();
+
+	    function floatNumber() {
+	        chairIMG.textContent = currentNumber;
+
+	        if (currentNumber < 100) {
+	            currentNumber++;
+	            setTimeout(floatNumber, 10);
+	        } else {
+	        	setTimeout(function() {
+                chairIMG.textContent = '';
+                makeRightToChair(i);
+            	}, 200);
+	        }
 	    }
-
-	    imageLibrary.setAttribute("id", "imageLibrary2");
-	    // imageLibrary.style.height = '120px';
-	    // imageLibrary.style.overflowX = 'scroll';
-
 	}
 
-// 첫안내 서서히 사라지게
-	const first = document.getElementById('first')
+	function makeRightToChair(i){
+	    chairIMG.style.backgroundImage = 'url(./img/Demo_service/chair/' + presetArray[i].chair + '.png)';
 
-	first.addEventListener("animationend", function(e) {
-	    first.style.display = 'none'
-	}, false);
-
-
-// 타임아웃
-	let touchTimeout;
-
-	function resetTouchTimeout() {
-	    clearTimeout(touchTimeout);
-	    touchTimeout = setTimeout(goSplash, 30000);
+	    const properties = presetArray[i].property.split(' ');
+	    prop1.innerHTML = properties[0];
+	    prop2.innerHTML = properties[1];
+	    prop3.innerHTML = properties[2];
 	}
 
-	function TouchEventHandler() {
-	    resetTouchTimeout();
+
+	function makeLower() {
+	    for (let i = 0; i < presetArray.length; i++) {
+			const newIMG = document.createElement('img');
+			newIMG.id = "preset-" + (i + 1);
+			newIMG.classList.add('presetIMG');
+			newIMG.src = './img/Demo_service/img_preset/' + presetArray[i].name + '.jpg';
+			images.appendChild(newIMG);
+		    newIMG.addEventListener('click', function() {
+		        makeLeft(i);
+		        makeRight(i);
+		    });
+		}
 	}
 
-	function goSplash() {
-		location.replace('./splash.html');
+
+// // 타임아웃
+// 	let touchTimeout;
+
+// 	function resetTouchTimeout() {
+// 	    clearTimeout(touchTimeout);
+// 	    touchTimeout = setTimeout(goSplash, 30000);
+// 	}
+
+// 	function TouchEventHandler() {
+// 	    resetTouchTimeout();
+// 	}
+
+// 	function goSplash() {
+// 		location.replace('./splash.html');
+// 	}
+
+// 	document.addEventListener('touchstart', TouchEventHandler);
+
+// 	resetTouchTimeout();
+
+
+
+// 페이지 전환 시 페이드아웃
+	function fadeToWhite() {
+		imageLibrary.style.zIndex = 1;
+		document.getElementById('fadePage').classList.remove("fadeFromWhite");
+		document.getElementById('fadePage').classList.add("fadeToWhite");
+		setTimeout(movePage, 2000);
 	}
 
-	document.addEventListener('touchstart', TouchEventHandler);
-
-	resetTouchTimeout();
+	function movePage(){
+		history.back();
+	}
 
 </script>
 </body>
