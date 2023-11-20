@@ -22,40 +22,12 @@
 		#Library{display: flex; gap: 8px; flex-wrap: wrap;}
 		.LibIMG {width: 194px; height: 194px;}
 
-	/*x버튼만들기*/
-		.btn_close {
-			position: absolute;
-			top: 0px; right: 0px;
-			display:inline-block;
-			width:40px;
-			height:40px;
-			margin: 180px 40px 0px 0px;
-			z-index: 10;
-
-			background: transparent;
-			border: none;
-			border-radius: 0;
-			padding: 0;
-		}
-		.btn_close:before, .btn_close:after {
-			margin-left: 18px;
-			margin-top: -4px;
-			position: absolute;
-			content:' ';
-			height:48px;
-			width:4px;
-			background-color: black;
-		}
-		.btn_close:before{
-			transform:rotate(45deg);
-		}
-		.btn_close:after{
-			transform:rotate(-45deg);
-		}
 	</style>
 </head>
 <body>
-	<div class="btn_close" onclick="history.back();"></div>
+	<div id="fadePage" class="fadeFromWhite"></div>
+
+	<div class="btn_close" onclick="fadeToWhite();"></div>
 	<div class="wrapper">
 		<div class="header">
 			<img src="./img/logo.svg" class="headLogo">
@@ -75,7 +47,7 @@
 	getLibIMG();
 
 	function getLibIMG() {
-	    for (let i = 1; i <= 68; i++) {
+	    for (let i = 1; i <= 64; i++) {
 	        const newDiv = document.createElement('div');
 	        newDiv.id = "LibIMG-" + i;
 	        newDiv.classList.add('LibIMG');
@@ -89,26 +61,36 @@
 
 
 
-// // // 타임아웃
-// 	let touchTimeout;
+// 타임아웃
+	let touchTimeout;
 
-// 	function resetTouchTimeout() {
-// 	    clearTimeout(touchTimeout);
-// 	    touchTimeout = setTimeout(goSplash, 30000);
-// 	}
+	function resetTouchTimeout() {
+	    clearTimeout(touchTimeout);
+	    touchTimeout = setTimeout(goSplash, 30000);
+	}
 
-// 	function TouchEventHandler() {
-// 	    resetTouchTimeout();
-// 	}
+	function TouchEventHandler() {
+	    resetTouchTimeout();
+	}
 
-// 	function goSplash() {
-// 		location.replace('./splash.html');
-// 	}
+	function goSplash() {
+		location.replace('./splash.html');
+	}
 
-// 	document.addEventListener('touchstart', TouchEventHandler);
+	document.addEventListener('touchstart', TouchEventHandler);
 
-// 	resetTouchTimeout();
+	resetTouchTimeout();
 
+// 페이지 전환 시 페이드아웃
+	function fadeToWhite() {
+		document.getElementById('fadePage').classList.remove("fadeFromWhite");
+		document.getElementById('fadePage').classList.add("fadeToWhite");
+		setTimeout(movePage, 2000);
+	}
+
+	function movePage(){
+		history.back();
+	}
 
 
 </script>
