@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Model(수정중)</title>
+
+	<link rel="stylesheet" href="https://use.typekit.net/qlr3jdd.css">
+    <link href="./css/style.css" rel="stylesheet">
+
+
+	<style type="text/css">
+		body{margin: auto;}
+
+		.wrapper{
+			width: 800px;
+			margin: auto;
+			margin-bottom: 120px;
+		}
+
+		.wrapper img{
+			margin-bottom: 120px;
+		}
+
+		.header{
+			width: 800px;
+			margin: auto;
+			margin-top: 180px;
+			margin-bottom: 180px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="fadePage" class="fadeFromWhite"></div>
+
+	<div class="btn_close" onclick="fadeToWhite();"></div>
+
+	<div class="header">
+		<img src="./img/logo.svg" class="headLogo">
+		<h2>Model Architecture</h2>
+	</div>
+
+	<div class="wrapper">
+		<img src="./img/GoogleAILogo.svg" height="80px" style="margin-bottom: 60px;">
+		<p>
+			IMChair 프로젝트에서는 전이학습(Transfer Learning)의 방식을 사용했다. 전이학습은 이미 대량의 데이터셋으로 <br>학습된 모델의 지식을 활용하여, 새로운 모델을 빠르고 효율적으로 학습시키는 방법이다.<br><br>
+			이미지 분류를 위해 널리 알려진 구글의 인셉션(Inception V3) 모델을 기반으로, 이미지의 다양한 <br>
+			요소와 형태를 인식하고 분석하는 모델을 구성했다.
+		</p>
+	</div>
+	<div class="wrapper">
+		<img src="./img/StableDiffusionLogo.png" height="80px" style="margin-bottom: 60px;">
+		<p>
+			딥러닝 모델을 훈련시키기 위해서는 대량의 라벨이 붙은 이미지 데이터가 필요하다. <br>
+			이를 위해 IMChair 프로젝트에서는 효율적인 데이터 수집 방법을 모색하였고, 이 과정에서 생성형 <br>
+			인공지능, Stable Diffusion을 활용했다.<br><br>
+			Stable Diffusion은 입력한 텍스트를 바탕으로 이미지를 생성할 수 있는 모델이다. 이를 활용하여, <br>
+			다양한 디자인 요소와 형태를 포함하는 새로운 이미지를 대량으로 생성했고, 이렇게 생성된 이미지는 <br>
+			딥러닝 모델의 학습 데이터로 사용되었다.
+		</p>
+	</div>
+	<div class="wrapper">
+		<img src="./img/Model1.png" width="100%" style="margin-bottom: 60px;">
+	</div>
+	<div class="wrapper">
+		<img src="./img/Model2.png" width="1286px" style="transform: translateX(-243px);">
+		<p>
+			데이터 라벨링은 모델 학습의 핵심 과정 중 하나로, 이는 모델에게 정답지를 제공하는 역할을 한다. <br>
+			IMChair의 딥러닝 모델에서는 이미지의 주요 특성과 연관된 형용사로 라벨링을 진행했다. ‘hard’와 <br>
+			‘soft’, ‘static’과 ‘dynamic’ 등의 형용사는 각 이미지의 특성을 설명하는 데 사용되었다. 예를 들어, <br>
+			dynamic의 이미지를 생성하기 위한 프롬프트로 ‘images with irregular and energetic visual <br>
+			elements in a dynamic composition’이 사용되었다.
+		</p>
+	</div>
+	<div class="wrapper">
+			<img src="./img/Model3.png" width="1286px" style="transform: translateX(-243px);">
+		<p>
+			Stable Diffusion 모델은 이미 대량의 데이터로 학습되었기 때문에, 키워드와 연관된 이미지를 <br>
+			생성하는 데 있어 주관적인 의견의 영향을 최소화할 수 있다. 이는 이미지 생성 과정에서 주관적인 해석을 <br>
+			줄이고, 데이터에 기반한 보다 객관적이고 일관된 결과물을 만들어낼 수 있게 한다. <br><br>
+			결과적으로 이러한 접근은 IMChair의 딥러닝 모델 구성에서 주관적인 판단이나 편향을 최소화하고, <br>
+			다양한 디자인 요소와 형태를 탐색하는 데 있어 보다 광범위한 가능성을 제공한다. 이를 통해, 이미지 <br>
+			데이터 수집 과정에서 효율성과 창의성을 향상시킬 수 있었다.
+		</p>
+	</div>
+	<div class="wrapper">
+		<button id="backBtn" onclick="fadeToWhite();" style="background: black; color: white;">
+			이전 페이지로 돌아가기
+		</button>	
+	</div>
+
+<script type="text/javascript">
+
+
+// 타임아웃
+	let touchTimeout;
+
+	function resetTouchTimeout() {
+	    clearTimeout(touchTimeout);
+	    touchTimeout = setTimeout(goSplash, 30000);
+	}
+
+	function TouchEventHandler() {
+	    resetTouchTimeout();
+	}
+
+	function goSplash() {
+		location.replace('./splash.html');
+	}
+
+	document.addEventListener('touchstart', TouchEventHandler);
+
+	resetTouchTimeout();
+
+// 페이지 전환 시 페이드아웃
+	function fadeToWhite() {
+		document.getElementById('fadePage').classList.remove("fadeFromWhite");
+		document.getElementById('fadePage').classList.add("fadeToWhite");
+		setTimeout(movePage, 2000);
+	}
+
+	function movePage(){
+		history.back();
+	}
+
+
+</script>
+</body>
+</html>
