@@ -257,7 +257,10 @@ function scrollChange(){
 // 타임아웃
 	let touchTimeout;
     resetTouchTimeout();
+	document.getElementById('fadePage').classList.remove("fadeToWhite");
+	document.getElementById('fadePage').classList.add("fadeFromWhite");
 	document.addEventListener('touchstart', TouchEventHandler);
+
 
 	function TouchEventHandler() {
 	    resetTouchTimeout();
