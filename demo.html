@@ -116,6 +116,35 @@
 			text-align: center;
 		}
 
+		#loadingContainer{
+			position: fixed; right: 0px; 
+			text-align: center; 
+			z-index: 2; 
+			padding: 40px 0;
+		}
+		#loadingStat{
+			font-size: 30px;
+			padding: 220px 0 40px 0;
+		}
+
+		#loadingNum{
+			font-size: 120px;
+		}
+
+		.fadeoutCont{
+			opacity: 1;
+			animation-name: fadeoutCont;
+			animation-duration: 1.6s;
+			animation-delay: 0.3s;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+		}
+
+		@keyframes fadeoutCont{
+			0% {opacity: 1;}
+			100% {opacity: 0;}
+		}
+
 /*x버튼만들기*/
 		.btn_close {
 			position: absolute;
@@ -160,6 +189,10 @@
 	<div id="first">
 		<h3 id="firstText" class="white" >마음에 드는 이미지를 선택해 보세요</h3>
 		<div id="firstLibrary"></div>
+	</div>
+	<div class="col2" id="loadingContainer"">
+		<h2 id="loadingStat">Generating...</h2>
+		<h2 id="loadingNum"></h2>
 	</div>
 	<div id="IMGAndChair">
 		<div class="col2" id="colIMG">
@@ -228,6 +261,9 @@
 	const selectedIMG = document.getElementById("selectedIMG");
 	const images = document.getElementById("images");
 	const IMGs = document.querySelectorAll('.presetIMG');
+	const loadingContainer = document.getElementById("loadingContainer");
+	const loadingNum = document.getElementById("loadingNum");
+
 
 	for (let i = 0; i < IMGs.length; i++) {
 	    IMGs[i].addEventListener('click', function() {
@@ -241,8 +277,6 @@
 	    });
 	}
 
-
-
 	function makeLeft(i){
 		selectedIMG.style.backgroundImage = 'url(./img/Demo_service/img_preset/' + presetArray[i].name + '.jpg)';
 
@@ -255,23 +289,27 @@
 	    prop2.innerHTML = '';
 	    prop3.innerHTML = '';
 	    chairIMG.style.backgroundImage = '';
+		loadingContainer.classList.remove("fadeoutCont");
 
 	    let currentNumber = 1;
 	    floatNumber();
 
 	    function floatNumber() {
-	        chairIMG.textContent = currentNumber;
+	        loadingNum.textContent = currentNumber + "%";
 
 	        if (currentNumber < 100) {
 	            currentNumber++;
 	            setTimeout(floatNumber, 10);
 	        } else {
-	        	setTimeout(function() {
-                chairIMG.textContent = '';
-                makeRightToChair(i);
-            	}, 200);
+				loadingNum.textContent = 'Complete!';
+				makeRightToChair(i);
+				loadingContainer.classList.add("fadeoutCont");
 	        }
 	    }
+	}
+
+	function fadeoutCont(){
+		loadingContainer.classList.add("fadeoutCont");
 	}
 
 	function makeRightToChair(i){
