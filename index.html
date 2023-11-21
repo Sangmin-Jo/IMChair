@@ -295,6 +295,22 @@ function scrollChange(){
 	}
 
 
+// 페이지 이동하기 전에 현재 스크롤 위치 저장
+	window.addEventListener('beforeunload', function () {
+	    const scrollPosition = window.scrollY;
+	    sessionStorage.setItem('scrollPosition', scrollPosition);
+	});
+
+// 페이지 로드 시 저장된 스크롤 위치 복원
+	window.addEventListener('load', function () {
+	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+	    if (savedScrollPosition !== null) {
+	        window.scrollTo(0, savedScrollPosition);
+	        sessionStorage.removeItem('scrollPosition'); // 복원 후 저장된 위치 제거 (선택 사항)
+	    }
+	});
+
+
 </script>
 </body>
 </html>
