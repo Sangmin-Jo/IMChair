@@ -30,7 +30,7 @@
 
 
 		#intro_1{
-			position: fixed; 
+			position: fixed; top: -40px; 
 			background-image: url("./img/logo.svg");
 			background-size: calc(100% - 80px);
 			background-position: center;
@@ -92,8 +92,7 @@
 	</div>
 
 	<div id="intro" class="main">
-		<div id="intro_1" class="wrapper">
-		</div>
+		<div id="intro_1" class="wrapper"></div>
 		<div id="videoContainer">
 			<video id="introVideo" source src="././img/movie.mp4" type="video/mp4" 
 			loop autoplay muted>
@@ -209,7 +208,7 @@
 	        const scrollPosition = window.scrollY;
 	        const introElement = document.getElementById('intro_1');
 	        const elementHeight = introElement.clientHeight;
-	        const opacity = 1 - scrollPosition / elementHeight;
+	        const opacity = 1 - scrollPosition / ( elementHeight + 120 );
 	        introElement.style.opacity = opacity.toFixed(2);
 	    }
 	});
@@ -254,6 +253,25 @@ function scrollChange(){
         }
     };
 
+
+
+// 페이지 이동하기 전에 현재 스크롤 위치 저장
+	window.addEventListener('beforeunload', function () {
+	    const scrollPosition = window.scrollY;
+	    sessionStorage.setItem('scrollPosition', scrollPosition);
+	});
+
+// 페이지 로드 시 저장된 스크롤 위치 복원
+	window.addEventListener('load', function () {
+	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+	    if (savedScrollPosition !== null) {
+	        window.scrollTo(0, savedScrollPosition);
+	        sessionStorage.removeItem('scrollPosition'); // 복원 후 저장된 위치 제거 (선택 사항)
+	    }
+	});
+
+
+
 // 타임아웃
 	let touchTimeout;
     resetTouchTimeout();
@@ -273,6 +291,7 @@ function scrollChange(){
 
 	
 	function movePageSplash() {
+		sessionStorage.removeItem('scrollPosition');
 		document.getElementById('fadePage').classList.remove("fadeFromWhite");
 		document.getElementById('fadePage').classList.add("fadeToWhite");
 		setTimeout(goSplash, 2000);
@@ -295,20 +314,7 @@ function scrollChange(){
 	}
 
 
-// 페이지 이동하기 전에 현재 스크롤 위치 저장
-	window.addEventListener('beforeunload', function () {
-	    const scrollPosition = window.scrollY;
-	    sessionStorage.setItem('scrollPosition', scrollPosition);
-	});
 
-// 페이지 로드 시 저장된 스크롤 위치 복원
-	window.addEventListener('load', function () {
-	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-	    if (savedScrollPosition !== null) {
-	        window.scrollTo(0, savedScrollPosition);
-	        sessionStorage.removeItem('scrollPosition'); // 복원 후 저장된 위치 제거 (선택 사항)
-	    }
-	});
 
 
 </script>
