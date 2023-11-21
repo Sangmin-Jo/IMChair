@@ -256,15 +256,9 @@ function scrollChange(){
         }
     };
 
-
-
-// 페이지 이동하기 전에 현재 스크롤 위치 저장
-	window.addEventListener('beforeunload', function () {
-	    const scrollPosition = window.scrollY;
-	    sessionStorage.setItem('scrollPosition', scrollPosition);
-	});
-
 // 페이지 로드 시 저장된 스크롤 위치 복원
+	const scrollPosition = window.scrollY;
+
 	window.addEventListener('load', function () {
 	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
 	    if (savedScrollPosition !== null) {
@@ -309,6 +303,8 @@ function scrollChange(){
 
 
 	function movePage(destination) {
+	    sessionStorage.setItem('scrollPosition', scrollPosition);
+
 		document.getElementById('fadePage').classList.remove("fadeFromWhite");
 		document.getElementById('fadePage').classList.add("fadeToWhite");
 		setTimeout(() => {
