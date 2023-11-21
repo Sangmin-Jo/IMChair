@@ -257,7 +257,7 @@ function scrollChange(){
     };
 
 // 페이지 로드 시 저장된 스크롤 위치 복원
-	const scrollPosition = window.scrollY;
+	let scrollPosition = window.scrollY;
 
 	window.addEventListener('load', function () {
 	    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
@@ -267,6 +267,10 @@ function scrollChange(){
 	    }
 	});
 
+	window.addEventListener('scroll', function () {
+	    // 스크롤 할 때마다 scrollPosition 업데이트
+	    scrollPosition = window.scrollY;
+	});
 
 
 // 타임아웃
@@ -295,6 +299,7 @@ function scrollChange(){
 	}
 
 	function goSplash() {
+	    sessionStorage.removeItem('scrollPosition'); // 저장된 위치 제거 (선택 사항)
 		location.replace('./splash.html');
 	}
 
