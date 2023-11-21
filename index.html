@@ -17,31 +17,30 @@
 			overflow: hidden;
 		}
 		#introVideo {
-			width: 100%;
+			width: 100%; background-color: rgb(255,255,255);
 		}
 
 		#videoContainer {
-			width: 1366px; height: 1024px; padding-top: 140px;
-			overflow: hidden;
+			top: 0;
+			z-index: -99;
+			width: 1366px; height: 884px; padding-top: 140px;
+			overflow: hidden; background-color: rgb(255,255,255);
 		}
 
 
-/*처음 큰로고*/
-		#biglogo{
-			position: fixed; top: 0; left: 0;
+
+		#intro_1{
+			position: absolute; 
 			background-image: url("./img/logo.svg");
-			background-color: none;
 			background-size: calc(100% - 80px);
 			background-position: center;
 			background-repeat: no-repeat;
 			background-attachment: fixed;
+			background-color: transparent;
 		}
 
-
-/*이미지 슬라이드*/
-		#intro_1{
+		#intro_2{
 			background-image: url("./img/logoGrey.svg");
-			background-color: none;
 			background-size: calc(100% - 80px);
 			background-position: center;
 			background-repeat: no-repeat;
@@ -49,6 +48,7 @@
 			background-color: white;
 		}
 
+/*이미지 슬라이드*/
 		#main_Demo{position: relative; overflow: hidden;}
 		#bgSlide{
 			position: absolute; 
@@ -101,13 +101,14 @@
 	</div>
 
 	<div id="intro" class="main">
+		<div id="intro_1" class="wrapper">
+		</div>
 		<div id="videoContainer">
 			<video id="introVideo" source src="././img/movie.mp4" type="video/mp4" 
 			loop autoplay muted>
 			</video>
 		</div>
-		<div id="biglogo" class="full"></div>
-		<div id="intro_1" class="wrapper">
+		<div id="intro_2" class="wrapper">
 			<h3 style="padding-top: 125px;">
 				IMChair 시리즈는 인공지능에 기반해 당신에게 의자를 추천합니다.<br>
 				당신이 업로드한 이미지를 분석하고, 그것에 꼭 맞는 의자를 제안합니다.<br>
@@ -134,7 +135,7 @@
 					이미지 프리셋 중 마음에 드는 이미지를 골라, IMChair가 분석한 이미지의<br>
 					결과와 의자를 확인해 보세요.
 				</h3>
-				<button id="DemoBtn" onclick="movePageDemo();" style="background: white; color: black;">
+				<button id="DemoBtn" onclick="movePage('./demo.html');" style="background: white; color: black;">
 					데모 서비스 더 살펴보기
 				</button>
 			</div>
@@ -151,6 +152,7 @@
 		</div>
 		<div id="main_ModelArchitecture_2" class="wrapper main">
 			<div class="setBottom">
+				<img src="./img/StableDiffusionLogo.png" height="80px" style="margin-bottom: 96px;">
 				<p>
 					딥러닝 모델을 훈련시키기 위해서는 대량의 라벨이 붙은 이미지 데이터가 필요하다. <br>
 					이를 위해 IMChair 프로젝트에서는 효율적인 데이터 수집 방법을 모색하였고, 이 과정에서 생성형 <br>
@@ -160,17 +162,17 @@
 					다양한 디자인 요소와 형태를 포함하는 새로운 이미지를 대량으로 생성했고, 이렇게 생성된 이미지는 <br>
 					딥러닝 모델의 학습 데이터로 사용되었다.
 				</p>
-				<button id="ModelBtn" onclick="movePageModel();" style="background: black; color: white;">
+				<button id="ModelBtn" onclick="movePage('./model.html');" style="background: black; color: white;">
 					Model Architecture 더 살펴보기
 				</button>
 			</div>
 		</div>
 		<div id="main_Library" class="wrapper main">
 			<div class="setBottom">
-				<div class="libraryName" onclick="movePageLib1();">Hard</div>
-				<div class="libraryName" onclick="movePageLib2();">Soft</div>
-				<div class="libraryName" onclick="movePageLib3();">Static</div>
-				<div class="libraryName" onclick="movePageLib4();">Dynamic</div>
+				<div class="libraryName" onclick="movePage('./lib1.html');">Hard</div>
+				<div class="libraryName" onclick="movePage('./lib2.html');">Soft</div>
+				<div class="libraryName" onclick="movePage('./lib3.html');">Static</div>
+				<div class="libraryName" onclick="movePage('./lib4.html');">Dynamic</div>
 			</div>
 		</div>
 	</div>
@@ -248,52 +250,33 @@ function scrollChange(){
     };
 
 // 타임아웃
+    resetTouchTimeout();
 	let touchTimeout;
+	document.addEventListener('touchstart', TouchEventHandler);
+
+	function TouchEventHandler() {
+	    resetTouchTimeout();
+	}
 
 	function resetTouchTimeout() {
 	    clearTimeout(touchTimeout);
 	    touchTimeout = setTimeout(movePageSplash, 30000);
 	}
 
-	function TouchEventHandler() {
-	    resetTouchTimeout();
-	}
-
-	function goSplash() {
-		location.replace('./splash.html');
-	}
-
-	document.addEventListener('touchstart', TouchEventHandler);
-
-	resetTouchTimeout();
-
-
-// 페이지 전환 시 페이드아웃
+	
 	function movePageSplash() {
 		document.getElementById('fadePage').classList.remove("fadeFromWhite");
 		document.getElementById('fadePage').classList.add("fadeToWhite");
 		setTimeout(goSplash, 2000);
 	}
 
-	function movePageDemo(){
-		movePage('./demo.html');
+	function goSplash() {
+		location.replace('./splash.html');
 	}
 
-	function movePageLib1(){
-		movePage('./lib1.html');
-	}
-	
-	function movePageLib2(){
-		movePage('./lib2.html');
-	}
-	
-	function movePageLib3(){
-		movePage('./lib3.html');
-	}
-	
-	function movePageLib4(){
-		movePage('./lib4.html');
-	}
+
+// 페이지 전환 시 페이드아웃
+
 
 	function movePage(destination) {
 		document.getElementById('fadePage').classList.remove("fadeFromWhite");
