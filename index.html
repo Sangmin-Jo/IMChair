@@ -30,23 +30,14 @@
 
 
 		#intro_1{
-			position: absolute; 
+			position: fixed; 
 			background-image: url("./img/logo.svg");
 			background-size: calc(100% - 80px);
 			background-position: center;
 			background-repeat: no-repeat;
-			background-attachment: fixed;
 			background-color: transparent;
 		}
 
-		#intro_2{
-			background-image: url("./img/logoGrey.svg");
-			background-size: calc(100% - 80px);
-			background-position: center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-color: white;
-		}
 
 /*이미지 슬라이드*/
 		#main_Demo{position: relative; overflow: hidden;}
@@ -210,6 +201,20 @@
 		}
 	}
 
+// 빅로고 투명도
+	document.addEventListener('DOMContentLoaded', function () {
+	    window.addEventListener('scroll', handleScroll);
+
+	    function handleScroll() {
+	        const scrollPosition = window.scrollY;
+	        const introElement = document.getElementById('intro_1');
+	        const elementHeight = introElement.clientHeight;
+	        const opacity = 1 - scrollPosition / elementHeight;
+	        introElement.style.opacity = opacity.toFixed(2);
+	    }
+	});
+
+
 // 내비 내용 변경
 const header = document.getElementById('header');
 const nav = document.getElementById('nav');
@@ -250,8 +255,8 @@ function scrollChange(){
     };
 
 // 타임아웃
-    resetTouchTimeout();
 	let touchTimeout;
+    resetTouchTimeout();
 	document.addEventListener('touchstart', TouchEventHandler);
 
 	function TouchEventHandler() {
